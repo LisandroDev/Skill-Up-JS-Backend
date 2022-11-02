@@ -32,3 +32,25 @@ exports.updateUser = catchAsync(async(req, res, next)=>{
 exports.deleteUser = catchAsync(async(req, res, next)=>{
   endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user delete controller'})
 })
+
+
+//Validation middleware is needed.
+
+exports.getUser = catchAsync(async (req, res ,next) => {
+  try {
+    const response = await User.findOne({where:{userId: req.params.id}})
+    if(response){
+      endpointResponse({
+        res,
+        message:'Operacion exitosa',
+        body: response
+      })
+    }
+    else {
+      res.status(404).json({error: 'User not found.', status: 404})
+    }
+  } catch(error){
+    const httpError = createHttpEror(error.statusCode, `Error retrieving user - ${error.message}`)
+    next(httpError)  
+  }
+})
