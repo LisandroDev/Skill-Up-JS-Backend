@@ -1,10 +1,11 @@
 const { Transaction } = require("../database/models");
+process.env.NODE_ENV = 'test';
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const should = chai.should();
 const server = require("../app");
 const { faker } = require("@faker-js/faker");
-const { request, expect } = require("chai");
+const should = chai.should();
+
 
 chai.use(chaiHttp);
 
@@ -103,7 +104,7 @@ describe("Transaction Endpoint", () => {
   });
 
   after((done) => {
-    Transaction.destroy({ where: { id: testTransaction.id } });
-    done();
+    Transaction.destroy({ where: { id: testTransaction.id , force: true} })
+    done()
   });
 });

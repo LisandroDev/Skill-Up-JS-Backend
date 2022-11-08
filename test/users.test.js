@@ -63,7 +63,6 @@ describe("User Endpoint", () => {
         .get("/users/" + testUser.id)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.body.firstName.should.be.eql(testUser.firstName);
           done();
         });
     });
@@ -86,7 +85,6 @@ describe("User Endpoint", () => {
         .send({ ...testUser, lastName: "user updated"})
         .end((err, res) => {
           res.should.have.status(200);
-          console.log(res.body.body)
           done();
         });
     });
@@ -105,7 +103,7 @@ describe("User Endpoint", () => {
   });
 
   after((done) => {
-    User.destroy({ where: { id: testUser.id } });
+    User.destroy({ where: { id: testUser.id } , force: true})
     done();
   });
 });

@@ -1,4 +1,5 @@
 const { Category } = require("../database/models");
+process.env.NODE_ENV = 'test';
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../app");
@@ -75,7 +76,7 @@ describe("Categories endpoint Endpoint", () => {
   });
 
   describe("DELETE /categories", () => {
-    it("should delete categories by given ID", (done) => {
+    it("should delete category by given ID", (done) => {
       chai
         .request(server)
         .delete("/categories/" + testCategory.id)
@@ -87,7 +88,7 @@ describe("Categories endpoint Endpoint", () => {
   });
 
   after((done) => {
-    Category.destroy({ where: { id: testCategory.id } });
+    Category.destroy({ where: { id: testCategory.id, force: true } })
     done();
   });
 });
