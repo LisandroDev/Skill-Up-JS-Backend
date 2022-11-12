@@ -46,7 +46,7 @@ const createTransaction = async (req, res, next) => {
     let transaction = {
       amount: req.body.amount,
       description: req.body.description,
-      date: req.body.date,
+      date: new Date().toISOString().slice(0, 10),
       categoryId: req.body.categoryId,
     }
     if (req.user.roleId == 1)  {
