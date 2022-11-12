@@ -62,7 +62,7 @@ const updateUser = async(req, res, next)=>{
       roleId
     }
     
-    const userUpdated = await userUpdateService({id: req.params.id}, userBody);
+    const userUpdated = await userUpdateService({id: req.user.id}, userBody);
 
     if(userUpdated === null){
       throw new ErrorObject('The user does not exist', 404);
@@ -89,13 +89,10 @@ const updateUserPassword = async(req, res, next) => {
     const { password, newPassword } =  req.body;
 
     if(password === newPassword){
-      endpointResponse({
-        res,
-        message: 'The password and new password are equals',
-      });
+      throw new ErrorObject('The password and new password are equals', 400);
     }
 
-    const passwordUpdated = await updatePasswordService({id: req.params.id}, password, newPassword)
+    const passwordUpdated = await updatePasswordService({id: req.user.id}, password, newPassword)
 
     if(passwordUpdated === null){
       throw new ErrorObject('The user does not exist', 404);
@@ -121,9 +118,7 @@ const updateUserPassword = async(req, res, next) => {
 
 const deleteUser = catchAsync(async(req, res, next)=>{
   try{
-    const idUser = req.params.id
-
-    const userDeleted = await userDeleteService({id: idUser})
+    const userDeleted = await userDeleteService({id: req.user.id})
 
     if(!userDeleted){
       throw new ErrorObject('The user does not exist', 404);
