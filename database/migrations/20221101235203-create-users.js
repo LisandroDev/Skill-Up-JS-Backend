@@ -27,7 +27,7 @@ module.exports = {
       avatar: Sequelize.STRING,
       roleId: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       deletedAt: {
         type: Sequelize.STRING

@@ -11,7 +11,7 @@ for (let i = 1; i < quantity; i++) {
     password: faker.internet.password(),
     email: faker.internet.email(),
     avatar: faker.image.avatar(),
-    roleId: true,
+    roleId: 2,
     createdAt: new Date(),
     updatedAt: new Date()
   })

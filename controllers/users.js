@@ -202,7 +202,7 @@ const getUser = async (req, res ,next) => {
       throw new ErrorObject('The user does not exist', 400);
     }
   } catch(error){
-    const httpError = createHttpEror(error.statusCode, `Error retrieving user - ${error.message}`)
+    const httpError = createHttpError(error.statusCode, `Error retrieving user - ${error.message}`)
     next(httpError)  
   }
 }
