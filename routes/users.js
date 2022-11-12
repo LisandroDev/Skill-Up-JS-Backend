@@ -18,11 +18,11 @@ router.post('/', createUser)
 
 router.get('/user', getToken, userAuthenticated, getUser)
 
-router.put('/user', getToken, ownership, schemaValidator(user), updateUser)
+router.put('/user', getToken, schemaValidator(user), updateUser)
 
-router.delete('/user', getToken, userAuthenticated, ownership, deleteUser)
+router.delete('/user', getToken, userAuthenticated, deleteUser)
 
-router.put('/changepassword/:id', getToken, userAuthenticated, ownership, updateUserPassword)
+router.put('/user/changepassword', getToken, userAuthenticated, updateUserPassword)
 
 router.post('/login', schemaValidator(login), loginUser)
 
