@@ -18,12 +18,4 @@ exports.transactions = {
         errorMessage: 'Amount is empty',
       },
     },
-    date: {
-      exists: { errorMessage: 'Date is required' },
-      isISO8601: { errorMessage: 'Please specify the date in the format yyyy-mm-ddThh:mm:ss' },
-      toDate: { errorMessage: 'Please specify the date in the format yyyy-mm-ddThh:mm:ss' },
-      notEmpty: {
-        errorMessage: 'Date is empty',
-      },
-    },
   };
