@@ -1,22 +1,16 @@
-const express = require("express");
-const {
-  createCategory,
-  getCategories,
-  getCategoryById,
-  modifyCategory,
-  deleteCategory,
-} = require("../controllers/categories");
+const express = require('express')
+const { createCategory, getCategories, getCategoryById, modifyCategory, deleteCategory } = require('../controllers/categories')
+const getToken = require('../helpers/getToken')
+const ownership = require('../middlewares/ownership')
 
-const router = express.Router();
+const router = express.Router()
 
-router.post("/", createCategory);
+router.post('/', getToken, ownership, createCategory)
 
-router.get("/", getCategories);
+router.get('/', getToken, getCategories)
 
-router.get("/:id", getCategoryById);
+router.put('/:id', getToken, ownership, modifyCategory)
 
-router.put("/:id", modifyCategory);
+router.delete('/:id', getToken, ownership, deleteCategory)
 
-router.delete("/:id", deleteCategory);
-
-module.exports = router;
+module.exports = router
