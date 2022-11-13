@@ -17,13 +17,12 @@ router.get('/', getToken, userAuthenticated, get)
 router.post('/', createUser)
 
 router.put('/', getToken, updateUser)
+router.get('/user', getToken, userAuthenticated, getUser)
 
-router.delete('/:id', getToken, userAuthenticated, ownership, deleteUser)
+router.delete('/user', getToken, userAuthenticated, deleteUser)
 
-router.put('/changepassword/:id', getToken, userAuthenticated, updateUserPassword)
+router.put('/user/changepassword', getToken, userAuthenticated, updateUserPassword)
 
 router.post('/login', schemaValidator(login), loginUser)
-
-router.get('/user', getToken, userAuthenticated, getUser)
 
 module.exports = router
