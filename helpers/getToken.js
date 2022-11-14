@@ -1,24 +1,27 @@
-const createHttpError = require('http-errors')
-const { decodeToken, verifyToken } = require('../helpers/tokenizer')
+const createHttpError = require("http-errors");
+const { decodeToken, verifyToken } = require("../helpers/tokenizer");
 
 const getToken = (req, res, next) => {
   try {
-    const bearerHeader = req.headers.authorization
+    const bearerHeader = req.headers.authorization;
 
-    const bearerToken = bearerHeader.split(' ')[1]
-    req.token = bearerToken
-    let decoded = decodeToken(bearerToken)
-    req.user = decoded.data
-    let verifiedDecodeToken
+    const bearerToken = bearerHeader.split(" ")[1];
+    req.token = bearerToken;
+    let decoded = decodeToken(bearerToken);
+    req.user = decoded.data;
+    let verifiedDecodeToken;
     if (!(verifiedDecodeToken = verifyToken(bearerToken))) {
-      throw new Error('Invalid token or missing')
+      throw new Error("Invalid token or missing");
     }
 
-    next()
+    next();
   } catch (error) {
-    const httpError = createHttpError((error.statusCode = 400), `[Error auth user] - [index - LOGIN]: ${error.message}`)
-    next(httpError)
+    const httpError = createHttpError(
+      (error.statusCode = 400),
+      `[Error auth user] - [index - LOGIN]: ${error.message}`
+    );
+    next(httpError);
   }
-}
+};
 
-module.exports = getToken
+module.exports = getToken;

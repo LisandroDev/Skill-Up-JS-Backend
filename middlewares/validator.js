@@ -1,7 +1,7 @@
-const { checkSchema } = require('express-validator');
-const { handleValidator } = require('../helpers/handleValidator');
+const { checkSchema } = require("express-validator");
+const { handleValidator } = require("../helpers/handleValidator");
 
-exports.schemaValidator =  (schema) => [
+exports.schemaValidator = (schema) => [
   checkSchema(schema),
   async (req, res, next) => {
     handleValidator(req, res, next);

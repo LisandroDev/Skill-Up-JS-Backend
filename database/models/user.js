@@ -1,7 +1,7 @@
-'use strict'
-const { Model } = require('sequelize')
+"use strict";
+const { Model } = require("sequelize");
 
-const { hash } = require('bcrypt')
+const { hash } = require("bcrypt");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.Transaction, { foreignKey: 'userId' })
-      User.belongsTo(models.Role, { foreignKey: 'roleId' })
+      User.hasMany(models.Transaction, { foreignKey: "userId" });
+      User.belongsTo(models.Role, { foreignKey: "roleId" });
     }
   }
   User.init(
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       paranoid: true,
       timestamps: true,
-      modelName: 'User'
-    },
-  )
-  return User
-}
+      modelName: "User",
+    }
+  );
+  return User;
+};

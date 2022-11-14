@@ -1,45 +1,49 @@
 const { Transaction } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const createHttpError = require("http-errors");
-const { ErrorObject } = require('../helpers/error');
+const { ErrorObject } = require("../helpers/error");
 
 //Validation middleware is needed.
 
 const getTransactions = async (req, res, next) => {
-  let queryConfig = {deletedAt: null}
-  req.user.roleId == 1 ? undefined : queryConfig.userId = req.user.id
+  let queryConfig = { deletedAt: null };
+  req.user.roleId == 1 ? undefined : (queryConfig.userId = req.user.id);
   try {
-      const response = await Transaction.findAll({where: queryConfig})
-      endpointResponse({
-          res,
-          message: 'Operacion Exitosa',
-          body: response
-      })
+    const response = await Transaction.findAll({ where: queryConfig });
+    endpointResponse({
+      res,
+      message: "Operacion Exitosa",
+      body: response,
+    });
   } catch (error) {
-      const httpError = createHttpError(error.statusCode, `Error retrieving transactions - ${error.message}`)
-      next(httpError)
+    const httpError = createHttpError(
+      error.statusCode,
+      `Error retrieving transactions - ${error.message}`
+    );
+    next(httpError);
   }
-}
+};
 
 const getTransaction = async (req, res, next) => {
   try {
-      const response = await Transaction.findByPk(req.params.id)
-      if(response){
-          endpointResponse({
-              res,
-              message: 'Operacion exitosa',
-              body: response
-          })
-      }
-      else{
-          throw new ErrorObject('Transaction not found', 404);
-      }
-
+    const response = await Transaction.findByPk(req.params.id);
+    if (response) {
+      endpointResponse({
+        res,
+        message: "Operacion exitosa",
+        body: response,
+      });
+    } else {
+      throw new ErrorObject("Transaction not found", 404);
+    }
   } catch (error) {
-      const httpError = createHttpError(error.statusCode, `Error retrieving transaction by id - ${error.message}`)
-      next(httpError)
+    const httpError = createHttpError(
+      error.statusCode,
+      `Error retrieving transaction by id - ${error.message}`
+    );
+    next(httpError);
   }
-}
+};
 
 const createTransaction = async (req, res, next) => {
   try {
@@ -48,20 +52,18 @@ const createTransaction = async (req, res, next) => {
       description: req.body.description,
       date: new Date().toISOString().slice(0, 10),
       categoryId: req.body.categoryId,
-    }
-    if (req.user.roleId == 1)  {
+    };
+    if (req.user.roleId == 1) {
       if (req.body.id) {
         transaction.userId = req.body.id;
       } else {
-        transaction.userId = req.user.id
+        transaction.userId = req.user.id;
       }
     } else {
-      transaction.userId = req.user.id
+      transaction.userId = req.user.id;
     }
 
-    const response = await Transaction.create(
-      transaction,
-    );
+    const response = await Transaction.create(transaction);
     if (response) {
       endpointResponse({
         res,
@@ -69,7 +71,7 @@ const createTransaction = async (req, res, next) => {
         body: response,
       });
     } else {
-      throw new ErrorObject('Transaction not found', 404);
+      throw new ErrorObject("Transaction not found", 404);
     }
   } catch (error) {
     const httpError = createHttpError(
@@ -81,31 +83,27 @@ const createTransaction = async (req, res, next) => {
 };
 // Operation update  controller
 const updateTransaction = async (req, res, next) => {
-  
   try {
     let transaction = {
       amount: req.body.amount,
       date: req.body.date,
       categoryId: req.body.categoryId,
-    }
-    if (req.user.roleId == 1)  {
+    };
+    if (req.user.roleId == 1) {
       if (req.body.id) {
         transaction.userId = req.body.id;
       } else {
-        transaction.userId = req.user.id
+        transaction.userId = req.user.id;
       }
     } else {
-      transaction.userId = req.user.id
+      transaction.userId = req.user.id;
     }
-    
-    const response = await Transaction.update(
-      transaction,
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+
+    const response = await Transaction.update(transaction, {
+      where: {
+        id: req.params.id,
+      },
+    });
     if (response) {
       endpointResponse({
         res,
@@ -113,7 +111,7 @@ const updateTransaction = async (req, res, next) => {
         body: response,
       });
     } else {
-      throw new ErrorObject('Transaction not found', 404);
+      throw new ErrorObject("Transaction not found", 404);
     }
   } catch (error) {
     const httpError = createHttpError(
@@ -127,13 +125,11 @@ const updateTransaction = async (req, res, next) => {
 // Operation delete controller
 const deleteTransaction = async (req, res, next) => {
   try {
-    const response = await Transaction.destroy(
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    const response = await Transaction.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
     if (response) {
       endpointResponse({
         res,
@@ -141,7 +137,7 @@ const deleteTransaction = async (req, res, next) => {
         body: response,
       });
     } else {
-      throw new ErrorObject('Transaction not found', 404);
+      throw new ErrorObject("Transaction not found", 404);
     }
   } catch (error) {
     const httpError = createHttpError(
@@ -152,4 +148,10 @@ const deleteTransaction = async (req, res, next) => {
   }
 };
 
-module.exports = { getTransactions, getTransaction, createTransaction, updateTransaction, deleteTransaction };
+module.exports = {
+  getTransactions,
+  getTransaction,
+  createTransaction,
+  updateTransaction,
+  deleteTransaction,
+};

@@ -11,7 +11,7 @@ const makeTransfer = async (req, res, next) => {
     const toUserId = req.body.selecteduserid;
     const toUser = await getUserService({ id: toUserId });
     const amount = req.body.amount;
-    if (fromUserId && toUserId ) {
+    if (fromUserId && toUserId) {
       let outcomeTransaction = {
         userId: fromUserId,
         amount: amount,
@@ -49,4 +49,4 @@ const makeTransfer = async (req, res, next) => {
   }
 };
 
-module.exports = {makeTransfer}
+module.exports = { makeTransfer };
