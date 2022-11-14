@@ -7,15 +7,15 @@ const { getUserService } = require("../services/userServices");
 const makeTransfer = async (req, res, next) => {
   try {
     const fromUserId = req.body.userid;
-    // const fromUser = await getUserService({ id: fromUserId });
+    const fromUser = await getUserService({ id: fromUserId });
     const toUserId = req.body.selecteduserid;
-    // const toUser = await getUserService({ id: toUserId });
+    const toUser = await getUserService({ id: toUserId });
     const amount = req.body.amount;
     if (fromUserId && toUserId ) {
       let outcomeTransaction = {
         userId: fromUserId,
         amount: amount,
-        description: `Transfer to ${toUserId}`,
+        description: `Transfer to ${toUser.firstName} ${toUser.lastName}`,
         date: new Date().toISOString().slice(0, 10),
         categoryId: 2,
       };
@@ -23,7 +23,7 @@ const makeTransfer = async (req, res, next) => {
       let incomeTransaction = {
         userId: toUserId,
         amount: amount,
-        description: `Received from ${fromUserId}`,
+        description: `Received from ${fromUser.firstName} ${fromUser.lastName}`,
         date: new Date().toISOString().slice(0, 10),
         categoryId: 1,
       };
