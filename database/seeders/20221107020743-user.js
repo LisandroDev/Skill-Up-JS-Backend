@@ -1,7 +1,7 @@
-'use strict';
-const { faker } = require('@faker-js/faker')
-const quantity = 11
-const data = []
+"use strict";
+const { faker } = require("@faker-js/faker");
+const quantity = 11;
+const data = [];
 
 for (let i = 1; i < quantity; i++) {
   data.push({
@@ -13,18 +13,16 @@ for (let i = 1; i < quantity; i++) {
     avatar: faker.image.avatar(),
     roleId: 2,
     createdAt: new Date(),
-    updatedAt: new Date()
-  })
+    updatedAt: new Date(),
+  });
 }
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.bulkInsert('Users', data, {})
-},
+    await queryInterface.bulkInsert("Users", data, {});
+  },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete('Users', null, {});
-  }
+    await queryInterface.bulkDelete("Users", null, {});
+  },
 };
-
-

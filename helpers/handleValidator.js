@@ -1,6 +1,6 @@
-const { validationResult } = require('express-validator');
-const fs = require('fs');
-const createHttpError = require('http-errors');
+const { validationResult } = require("express-validator");
+const fs = require("fs");
+const createHttpError = require("http-errors");
 
 const handleValidator = (req, res, next) => {
   try {
@@ -11,8 +11,8 @@ const handleValidator = (req, res, next) => {
     if (req.file) {
       fs.unlink(req.file.path, (err) => {
         if (err) return res.status(400).send({ errors: err.array() });
-      })  
-    }  
+      });
+    }
     return res.status(400).send({ errors: err.array() });
   }
 };
