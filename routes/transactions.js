@@ -11,7 +11,7 @@ const router = express.Router()
 router.get('/', getToken, userAuthenticated, getTransactions)
 router.post('/', getToken, userAuthenticated, schemaValidator(transactions), createTransaction)
 router.put('/:id', getToken, userAuthenticated, schemaValidator(transactions), updateTransaction)
-router .post ('/transfer', makeTransfer )
+router .post ('/transfer', userAuthenticated, makeTransfer )
 router.delete('/:id', getToken, userAuthenticated, deleteTransaction)
 
 module.exports = router
