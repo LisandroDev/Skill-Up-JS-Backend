@@ -12,7 +12,7 @@ const getUserService = async(conditions)=>{
   try{
     const user = await User.findOne({
       where: conditions
-    });
+      , attributes: { exclude: ['password'] } });
 
     return user;
   }
